@@ -7,8 +7,6 @@ import * as Google from "expo-auth-session/providers/google";
 export default function Login() {
   WebBrowser.maybeCompleteAuthSession();
 
-  //const [userInfo, setUserInfo] = useState(null);
-
   //client IDs from .env
   const config = {
     androidClientId:
@@ -19,9 +17,6 @@ export default function Login() {
     // webClientId: WEB_CLIENT_ID,expoClientId
   };
   const [request, response, promptAsync] = Google.useAuthRequest(config);
-  // useEffect(() => {
-  //   signInWithGoogle();
-  // }, [response]);
 
   return (
     <View>
