@@ -1,7 +1,28 @@
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import React from "react";
+import React, { useState, useEffect } from "react";
+import * as WebBrowser from "expo-web-browser";
+import * as Google from "expo-auth-session/providers/google";
+//import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Login() {
+  WebBrowser.maybeCompleteAuthSession();
+
+  //const [userInfo, setUserInfo] = useState(null);
+
+  //client IDs from .env
+  const config = {
+    androidClientId:
+      "1069193905348-cs93min8q7k4g4rfe6b0h9flee4gkt8s.apps.googleusercontent.com",
+    webClientId:
+      "1069193905348-jtg47du5saop7n98st0g1ps4hcp7vqr8.apps.googleusercontent.com",
+    // iosClientId: IOS_CLIENT_ID,
+    // webClientId: WEB_CLIENT_ID,expoClientId
+  };
+  const [request, response, promptAsync] = Google.useAuthRequest(config);
+  // useEffect(() => {
+  //   signInWithGoogle();
+  // }, [response]);
+
   return (
     <View>
       <Image
@@ -14,13 +35,10 @@ export default function Login() {
           Welcome to <Text style={{ fontWeight: "bold" }}>RewardHub</Text>
         </Text>
 
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => console.log("button is clicked")}
-        >
+        <TouchableOpacity style={styles.button} onPress={() => promptAsync()}>
           {" "}
           <Text style={{ textAlign: "center", fontSize: 17 }}>
-            lets Get Started
+            SignIn/Signup
           </Text>
         </TouchableOpacity>
       </View>
@@ -31,7 +49,6 @@ const styles = StyleSheet.create({
   loginImage: {
     width: 450,
     height: 450,
-    marginTop: 0,
     borderWidth: 4,
     borderColor: "#0000",
     borderRadius: 15,
@@ -39,7 +56,7 @@ const styles = StyleSheet.create({
   subContainer: {
     width: "100%",
     height: "70%",
-    marginTop: -10,
+    marginTop: -25,
     borderWidth: 4,
     backgroundColor: "#b8860b",
     borderTopLeftRadius: 30,
